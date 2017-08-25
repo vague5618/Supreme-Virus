@@ -105,15 +105,20 @@ casper.waitForSelector(('#cart > a.button.checkout'),
     function pass () {
         this.echo("it not Soldout");
     
-        this.evaluate(function(){
-        $("#cart > a.button.checkout")[0].click();        
-        });
+        //this.evaluate(function(){
+        //$("#cart > a.button.checkout")[0].click();        
+        //});
+    casper.open("https://www.supremenewyork.com/checkout");
+
     },
     function fail () {
         this.echo("fail it");
     },
     20000 // timeout limit in milliseconds
 );
+
+
+
 
 casper.waitForSelector(('#pay > input'),
     function pass () {
