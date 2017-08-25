@@ -102,7 +102,7 @@ casper.waitForSelector(('#details > h1'),
 
 casper.waitForSelector(('#cart > a.button.checkout'),
     function pass () {
-        this.echo("pass");
+        this.echo("it not Soldout");
         this.evaluate(function(){
         $("#cart > a.button.checkout")[0].click();        
         });
@@ -113,10 +113,11 @@ casper.waitForSelector(('#cart > a.button.checkout'),
     20000 // timeout limit in milliseconds
 );
 
-casper.waitForSelector(('#order_billing_name'),
+casper.waitForSelector(('#pay > input'),
     function pass () {
-    
-     var name = casper.evaluate(function () {
+        this.echo("pass to payment");
+   
+    var name = casper.evaluate(function () {
         return $("#order_billing_name").val("BAE JAEYONG");
     });
 
