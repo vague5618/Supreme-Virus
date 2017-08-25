@@ -15,7 +15,8 @@ var casper = require('casper').create({
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22',
     pageSettings: {
         loadImages: false,         // The WebPage instance used by Casper will
-        loadPlugins: false         // use these settings
+        loadPlugins: false,       // use these settings
+        resourceTimeout: 15000
     }
 });
 
