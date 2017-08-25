@@ -95,7 +95,6 @@ casper.waitForSelector(('#details > h1'),
 }).then(function(){
 
     //add to cart
-    
     casper.evaluate(function(){
         $("#add-remove-buttons > input").click();
     });
@@ -103,7 +102,6 @@ casper.waitForSelector(('#details > h1'),
 
 casper.waitForSelector(('#cart > a.button.checkout'),
     function pass () {
-    
         this.echo("pass");
         this.evaluate(function(){
         $("#cart > a.button.checkout")[0].click();        
@@ -114,7 +112,6 @@ casper.waitForSelector(('#cart > a.button.checkout'),
     },
     20000 // timeout limit in milliseconds
 );
-
 
 casper.waitForSelector(('#order_billing_name'),
     function pass () {
@@ -177,7 +174,7 @@ casper.waitForSelector(('#order_billing_name'),
     
     },
     function fail () {
-        this.echo("fail it");
+        this.echo("checkout Fail it");
     },
     20000 // timeout limit in milliseconds
 );
