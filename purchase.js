@@ -103,6 +103,7 @@ casper.waitForSelector(('#details > h1'),
 casper.waitForSelector(('#cart > a.button.checkout'),
     function pass () {
         this.echo("it not Soldout");
+    
         this.evaluate(function(){
         $("#cart > a.button.checkout")[0].click();        
         });
@@ -182,6 +183,11 @@ casper.waitForSelector(('#pay > input'),
 
 casper.on("page.error", function (msg, trace) {
     this.echo("Error: " + msg, "ERROR");
+});
+
+casper.on("resource.error", function(resourceError){
+    console.log('Unable to load resource (#' + resourceError.id + 'URL:' + resourceError.url + ')');
+    console.log('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
 });
 
 casper.on('url.changed', function (url) {
