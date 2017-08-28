@@ -58,16 +58,16 @@ casper.waitForSelector(('#container > article'),
     //sizePicker
     
     var size = casper.evaluate(function(){
-        return $("#size option:selected").text();
+        return $("#s option:selected").text();
     });
     
     casper.evaluate(function(targetSize){   
-    $("#size option")
+    $("#s option")
         .each(function() { this.selected =      (this.text == targetSize); });
     },targetSize);
    
     size = casper.evaluate(function(){
-        return $("#size option:selected").text();
+        return $("#s option:selected").text();
     });
     
         this.echo("choice size : "+size);
@@ -169,7 +169,7 @@ casper.waitForSelector(('#pay > input'),
         return $("#vval").val("572");
     });
     
-    casper.capture("cheer4.png");
+    casper.capture("process.png");
     
     },
     function fail () {
