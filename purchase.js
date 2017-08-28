@@ -1,22 +1,22 @@
-/**
- * Created by JAY on 2016. 7. 5..
- */
-
+var system = require('system');
+var args = system.args;
 var baseUrl = 'http://www.supremenewyork.com/shop';
-
-var itemSelector = "#shop-scroller > li:nth-child(1) > a > img";
-
 var targetColor = "Black";
 var targetSize = "Large";
+var itemSelector;
 
 var casper = require('casper').create({
     verbose: true,
     logLevel: 'debug',
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22',
+    viewportSize:{
+        width:2300,
+        height:1200
+    },
     pageSettings: {
-        loadImages: false,         // The WebPage instance used by Casper will
-        loadPlugins: false,       // use these settings
-        resourceTimeout: 15000
+        loadImages: true,         // The WebPage instance used by Casper will
+        loadPlugins: true,       // use these settings
+        resourceTimeout: 20000
     }
 });
 
@@ -31,21 +31,9 @@ casper.then(function () {
      },itemSelector);
 });
 
-//item check
-casper.waitForSelector(('#details > h1'),
+casper.waitForSelector(('#container > article'),
     function pass () {
-        var item = this.evaluate(function(){
-            return $('#details > h1').text();
-        });
-    
-        this.echo("item : "+item);
-    },
-    function fail () {
-        this.echo("fail it");
-    },
-    20000 // timeout limit in milliseconds
-).then(function(){
-    
+   
     var price = casper.evaluate(function(){
        return $("#details > p.price > span").text(); 
     });
@@ -56,8 +44,6 @@ casper.waitForSelector(('#details > h1'),
         return $("#details > p.style").text();
     });
     
-    this.echo("before color : " + color);
-
     //colorpicker
     casper.evaluate(function(targetColor){   
        $("a[data-style-name='"+targetColor+"']").click(); 
@@ -68,62 +54,65 @@ casper.waitForSelector(('#details > h1'),
     });
     
     this.echo("choice color : " + color);
-    
-    var soldOut = casper.evaluate(function(){
-        return $("#add-remove-buttons > b").text(); 
-    });
-       
-    this.echo(soldOut);
-    
+        
     //sizePicker
     
     var size = casper.evaluate(function(){
-        return $("#s option:selected").text();
+        return $("#size option:selected").text();
     });
     
-    this.echo("before size : "+size);
-
     casper.evaluate(function(targetSize){   
-    $("#s option")
+    $("#size option")
         .each(function() { this.selected =      (this.text == targetSize); });
     },targetSize);
    
     size = casper.evaluate(function(){
-        return $("#s option:selected").text();
+        return $("#size option:selected").text();
     });
     
-    this.echo("after size : "+size);
-}).then(function(){
-
-    //add to cart
-    casper.evaluate(function(){
-        $("#add-remove-buttons > input").click();
-    });
-});
-
-casper.waitForSelector(('#cart > a.button.checkout'),
-    function pass () {
-        this.echo("it not Soldout");
+        this.echo("choice size : "+size);
     
-        //this.evaluate(function(){
-        //$("#cart > a.button.checkout")[0].click();        
-        //});
-    casper.open("https://www.supremenewyork.com/checkout");
-
+        casper.capture("process1.png");
     },
     function fail () {
         this.echo("fail it");
     },
-    20000 // timeout limit in milliseconds
+    10000 // timeout limit in milliseconds
 );
 
+casper.waitForSelector(('#add-remove-buttons > input'),
+    function pass () {
+        casper.evaluate(function(){
+           $("#add-remove-buttons > input")[0].click();
+        });
+    
+        casper.capture("process2.png");
+    },
+    function fail () {
+        this.echo("fail it");
+    },
+    10000 // timeout limit in milliseconds
+);
 
-
+casper.waitUntilVisible('#cart > a.button.checkout',function(){
+   
+        if (this.visible('#cart > a.button.checkout')) {
+            this.echo("I can see the checkout");
+        }else {
+            this.echo("I can't see the checkout");
+        }
+    
+        casper.evaluate(function(){
+            $("#cart > a.button.checkout")[0].click();
+        });
+    
+        casper.capture("process3.png");
+});
 
 casper.waitForSelector(('#pay > input'),
     function pass () {
-        this.echo("pass to payment");
-   
+        this.echo("open checkOut");
+    
     var name = casper.evaluate(function () {
         return $("#order_billing_name").val("BAE JAEYONG");
     });
@@ -180,30 +169,33 @@ casper.waitForSelector(('#pay > input'),
         return $("#vval").val("572");
     });
     
+    casper.capture("cheer4.png");
+    
     },
     function fail () {
-        this.echo("checkout Fail it");
+        this.echo("fail it");
     },
-    20000 // timeout limit in milliseconds
+    10000 // timeout limit in milliseconds
 );
 
-casper.on("page.error", function (msg, trace) {
-    this.echo("Error: " + msg, "ERROR");
-});
+if(args[4]===undefined){
+    console.log('Try to pass some arguments when invoking this script!');
+    
+    casper.exit(); 
+    
+}else{
+    itemSelector = "#shop-scroller > li:nth-child("+args[4]+") > a > img";
+    
+    if(args[5]!=undefined){
+        targetColor = args[5];
+    }
+    
+    if(args[6]!=undefined){
+        targetSize = args[6];
+    }
+    
+    casper.run(function(){
+        casper.exit(); 
+    });
+}
 
-casper.on("resource.error", function(resourceError){
-    console.log('Unable to load resource (#' + resourceError.id + 'URL:' + resourceError.url + ')');
-    console.log('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
-});
-
-casper.on('url.changed', function (url) {
-    casper.echo(url);
-});
-
-casper.on('remote.message', function(message) {
-    this.echo('remote message caught: ' + message);
-});
-
-casper.run(function () {
-    casper.exit();
-});
