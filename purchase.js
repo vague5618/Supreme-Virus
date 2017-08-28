@@ -169,7 +169,7 @@ casper.waitForSelector(('#pay > input'),
         return $("#vval").val("572");
     });
     
-    casper.capture("process.png");
+    casper.capture("process4.png");
     
     },
     function fail () {
