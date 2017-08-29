@@ -15,9 +15,12 @@ var casper = require('casper').create({
     pageSettings: {
         loadImages: true,         // The WebPage instance used by Casper will
         loadPlugins: true,       // use these settings
+        javascriptEnabled: true,
         resourceTimeout: 20000
     }
 });
+
+
 
 casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11');
 
