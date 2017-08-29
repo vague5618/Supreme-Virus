@@ -195,10 +195,16 @@ casper.waitForSelector(('#confirmation'),
     },
     function fail () {
     
+        var isPhantom = casper.evaluate(function(){
+           return !!window.callPhantom; 
+        });
+    
+    
         casper.echo(casper.getPageContent());
     
         casper.capture("process6.png");
 
+        casper.echo(isPhantom);
     
         this.echo("fail it");
     },
