@@ -8,7 +8,7 @@ var itemSelector;
 var casper = require('casper').create({
     verbose: true,
     logLevel: 'debug',
-    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22',
+    userAgent: 'Chrome/25.0.1364.172',
     viewportSize:{
         width:2300,
         height:1200
