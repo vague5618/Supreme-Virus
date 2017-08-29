@@ -8,7 +8,6 @@ var itemSelector;
 var casper = require('casper').create({
     verbose: true,
     logLevel: 'debug',
-    userAgent: 'AppleWebKit/537.22 (KHTML, like Gecko)',
     viewportSize:{
         width:2300,
         height:1200
@@ -19,6 +18,8 @@ var casper = require('casper').create({
         resourceTimeout: 20000
     }
 });
+
+casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X)');
 
 casper.start('http://www.supremenewyork.com/shop', function () {
  casper.page.injectJs('./bower_components/jquery/dist/jquery.min.js');
