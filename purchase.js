@@ -114,7 +114,7 @@ casper.waitForSelector(('#pay > input'),
         this.echo("open checkOut");
     
     var name = casper.evaluate(function () {
-        return $("#order_billing_name").val("GGMAN");
+        return $("#order_billing_name").val("GGMAN G");
     });
 
     var email = casper.evaluate(function () {
