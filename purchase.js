@@ -114,11 +114,11 @@ casper.waitForSelector(('#pay > input'),
         this.echo("open checkOut");
     
     var name = casper.evaluate(function () {
-        return $("#order_billing_name").val("BAE JAEYONG");
+        return $("#order_billing_name").val("GGMAN");
     });
 
     var email = casper.evaluate(function () {
-        return $("#order_email").val("vague5618@gmail.com");
+        return $("#order_email").val("gkgk@gmail.com");
     });
 
     var tel = casper.evaluate(function () {
@@ -148,13 +148,9 @@ casper.waitForSelector(('#pay > input'),
     var country = casper.evaluate(function () {
         return $("#order_billing_country").val('USA').attr("selected", "selected");
     });
-
-    var cardType =casper.evaluate(function () {
-        return $('#credit_card_type').val($('#credit_card_type > option')[2].value)
-    });
-
+    
     var cardNumber =casper.evaluate(function () {
-        return $("#cnb").val('5371 2000 0280 3845');
+        return $("#cnb").val('9999 7777 4949 3845');
     });
 
     var credit_card_month =casper.evaluate(function () {
@@ -170,7 +166,24 @@ casper.waitForSelector(('#pay > input'),
     });
     
     casper.capture("process4.png");
+
+    casper.evaluate(function(){
+        $("#pay > input").click()
+    });
     
+    },
+    function fail () {
+        this.echo("fail it");
+    },
+    10000 // timeout limit in milliseconds
+);
+
+casper.waitForSelector(('#confirmation'),
+    function pass () {
+        
+        this.echo("purchase finish");
+    
+        casper.capture("process5.png");
     },
     function fail () {
         this.echo("fail it");
