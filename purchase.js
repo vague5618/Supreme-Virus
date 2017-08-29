@@ -165,12 +165,17 @@ casper.waitForSelector(('#pay > input'),
         return $("#vval").val("572");
     });
     
-    casper.capture("process4.png");
 
     casper.evaluate(function(){
-        $("#pay > input").click()
+        $("#cart-cc > fieldset > p:nth-child(4) > label > div > ins").click();
     });
     
+    casper.evaluate(function(){
+        $("#pay > input").click();
+    });
+  
+    casper.capture("process4.png");
+
     },
     function fail () {
         this.echo("fail it");
@@ -179,13 +184,16 @@ casper.waitForSelector(('#pay > input'),
 );
 
 casper.waitForSelector(('#confirmation'),
-    function pass () {
-        
+    function pass () {    
+    
         this.echo("purchase finish");
     
         casper.capture("process5.png");
     },
     function fail () {
+        casper.capture("process6.png");
+
+    
         this.echo("fail it");
     },
     10000 // timeout limit in milliseconds
