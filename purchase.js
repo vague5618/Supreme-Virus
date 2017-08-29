@@ -192,7 +192,7 @@ casper.waitForSelector(('#confirmation'),
     },
     function fail () {
     
-        casper.getContent();    
+        casper.echo(casper.getPageContent());
     
         casper.capture("process6.png");
 
