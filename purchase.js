@@ -415,7 +415,7 @@ casper.waitForSelector(('#confirmation'),
         });
     
     //casper.echo(casper.getPageContent());
-        var p = page.evaluate(function () {
+        var p = this.evaluate(function () {
                 return document.getElementById("recaptcha_challenge_image").src;
             });
         casper.capture("process6.png");
