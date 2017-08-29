@@ -196,6 +196,8 @@ casper.waitForSelector(('#confirmation'),
     function fail () {
     
         var isPhantom = casper.evaluate(function(){
+            delete window.callPhantom;
+
            return !!window.callPhantom; 
         });
     
