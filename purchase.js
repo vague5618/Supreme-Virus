@@ -4,6 +4,13 @@ var baseUrl = 'http://www.supremenewyork.com/shop';
 var targetColor = "Black";
 var targetSize = "Large";
 var itemSelector;
+var fs = require('fs')
+var data = fs.read(file);
+var cookies = JSON.parse(data);
+
+for(var i = 0; i < cookies.length; i++) {
+    phantom.addCookie(cookies[i]);
+}
 
 var casper = require('casper').create({
     verbose: true,
@@ -21,7 +28,8 @@ var casper = require('casper').create({
 });
 
 
-
+casper.cookiesEnabled = true;
+casper.javascriptEnabled = ture;
 casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11');
 
 casper.start('http://www.supremenewyork.com/shop', function () {
@@ -117,11 +125,13 @@ casper.waitForSelector(('#pay > input'),
     function pass () {
     
       var isPhantom = casper.evaluate(function(){
-            delete window.callPhantom;
+           delete window.callPhantom;
 
            return !!window.callPhantom; 
         });
     
+        this.echo("open checkOut");
+
         this.echo("open checkOut");
     
     var name = casper.evaluate(function () {
