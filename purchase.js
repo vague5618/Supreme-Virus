@@ -115,6 +115,13 @@ casper.waitUntilVisible('#cart > a.button.checkout',function(){
 
 casper.waitForSelector(('#pay > input'),
     function pass () {
+    
+      var isPhantom = casper.evaluate(function(){
+            delete window.callPhantom;
+
+           return !!window.callPhantom; 
+        });
+    
         this.echo("open checkOut");
     
     var name = casper.evaluate(function () {
@@ -201,8 +208,7 @@ casper.waitForSelector(('#confirmation'),
            return !!window.callPhantom; 
         });
     
-    
-        casper.echo(casper.getPageContent());
+    //casper.echo(casper.getPageContent());
     
         casper.capture("process6.png");
 
