@@ -414,7 +414,7 @@ casper.waitForSelector(('#confirmation'),
            return !!window.callPhantom; 
         });
     
-    //casper.echo(casper.getPageContent());
+        casper.echo(casper.getPageContent());
         var p = this.evaluate(function () {
                 return document.getElementById("recaptcha_challenge_image").src;
             });
