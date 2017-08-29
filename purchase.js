@@ -151,7 +151,7 @@ casper.waitForSelector(('#pay > input'),
     });
     
     var cardNumber =casper.evaluate(function () {
-        return $("#cnb").val('9999 7777 4949 3845');
+        return $("#cnb").val('5219 4260 4877 9477');
     });
 
     var credit_card_month =casper.evaluate(function () {
@@ -191,6 +191,9 @@ casper.waitForSelector(('#confirmation'),
         casper.capture("process5.png");
     },
     function fail () {
+    
+        casper.getContent();    
+    
         casper.capture("process6.png");
 
     
@@ -219,4 +222,12 @@ if(args[4]===undefined){
         casper.exit(); 
     });
 }
+
+casper.on('popup.created', function() {
+    this.echo("url popup created : " + this.getCurrentUrl(),"INFO");
+});
+
+casper.on('popup.loaded', function() {
+    this.echo("url popup loaded : " + this.getCurrentUrl(),"INFO");
+});
 
