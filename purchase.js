@@ -19,7 +19,7 @@ var casper = require('casper').create({
     }
 });
 
-casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X)');
+casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11');
 
 casper.start('http://www.supremenewyork.com/shop', function () {
  casper.page.injectJs('./bower_components/jquery/dist/jquery.min.js');
